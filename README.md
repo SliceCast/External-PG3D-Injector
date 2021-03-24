@@ -1,6 +1,7 @@
 # KMrite
-writing into android application lib.so with offset &amp; hex bytes
+writing into android application lib.so with offset &amp; hex bytes <br />
+now its only supports Non Root Only.
 
 # Usage
-the main code is in Tools.kt
-example using the code is in MainActivity.kt
+The main code is in Tools.kt <br />
+Example using the code is in MainActivity.kt
