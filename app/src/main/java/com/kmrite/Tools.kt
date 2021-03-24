@@ -7,7 +7,6 @@ import java.io.InputStreamReader
 import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 
-
 data class Memory(val pkg: String) {
     var pid: Int = 0
     var sAddress = 0.toLong()
@@ -21,7 +20,7 @@ class Tools {
             getProcessID(mem)
             if (mem.pid > 1) {
                 parseMap(mem, lib)
-                if (mem.sAddress >= 0)
+                if (mem.sAddress > 1)
                     return memEdit(mem, offset, hex)
             }
             return false
@@ -81,7 +80,7 @@ class Tools {
                     channel.channel.use { channels ->
                         val buff: ByteBuffer = ByteBuffer.wrap(hex2b(hex_t))
                         for (i in 0 until hex_t.length / 2) {
-                            channels.write(buff, (nmax.sAddress + offset) + i) //从seek处开始写字节
+                            channels.write(buff, (nmax.sAddress + offset) + i)
                         }
                     }
                 }
