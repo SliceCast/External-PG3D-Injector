@@ -18,25 +18,23 @@ class Tools {
         fun setCode(pkg: String, lib: String, offset: Int, hex: String): Boolean {
             val mem = Memory(pkg)
             getProcessID(mem)
-            if (mem.pid > 1) {
+            return if (mem.pid > 1 && mem.sAddress > 1) {
+                memEdit(mem, offset, hex)
+            } else {
                 parseMap(mem, lib)
-                if (mem.sAddress > 1)
-                    return memEdit(mem, offset, hex)
+                memEdit(mem, offset, hex)
             }
-            return false
         }
 
         private fun parseMap(nmax: Memory, lib_name: String) {
-            val fr = RandomAccessFile(File("/proc/${nmax.pid}/maps"), "r")
-            var line: String?
-            while (fr.readLine().also { line = it } != null) {
-                //process the line
-                if (line?.contains(lib_name) == true && line?.contains("/data/app") == true) {
-                    val lines = line!!.replace("\\s+".toRegex(), " ") //Removing WhiteSpace
-                    val regex = "\\p{XDigit}+".toRegex()
-                    val result: String = regex.find(lines)?.value!!
-                    nmax.sAddress = result.toLong(16)
-                    break
+            File("/proc/${nmax.pid}/maps").useLines { liness ->
+                liness.forEach {
+                    if (it.contains(lib_name) && nmax.sAddress == 0L) {
+                        val lines = it.replace("\\s+".toRegex(), " ") //Removing WhiteSpace
+                        val regex = "\\p{XDigit}+".toRegex()
+                        val result: String = regex.find(lines)?.value!!
+                        nmax.sAddress = result.toLong(16)
+                    }
                 }
             }
         }
