@@ -9,7 +9,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         //Sample Usage
         val pkg = "com.sumanto.app"
         val lib = "libUdin.so"
@@ -17,19 +16,7 @@ class MainActivity : AppCompatActivity() {
         val hex = "00 00 00 00"
         val mytext = findViewById<AppCompatTextView>(R.id.sample)
         findViewById<AppCompatButton>(R.id.start).setOnClickListener {
-//            Prefent freezing Apps
-            Thread {
-                try  {
-                    val you = Tools.setCode(pkg, lib, offset, hex).toString()
-                    synchronized(this) {
-                        runOnUiThread {
-                            mytext.text = you
-                        }
-                    }
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-            }.start()
+            mytext.text = Tools.setCode(pkg, lib, offset, hex).toString()
         }
     }
 }

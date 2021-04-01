@@ -1,15 +1,12 @@
 package com.kmrite
 
 import android.util.Log
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
-import java.io.RandomAccessFile
+import java.io.*
 import java.nio.ByteBuffer
 
 data class Memory(val pkg: String) {
     var pid: Int = 0
-    var sAddress = 0.toLong()
+    var sAddress: Long = 0L
 }
 
 class Tools {
@@ -18,24 +15,31 @@ class Tools {
         fun setCode(pkg: String, lib: String, offset: Int, hex: String): Boolean {
             val mem = Memory(pkg)
             getProcessID(mem)
-            return if (mem.pid > 1 && mem.sAddress > 1) {
-                memEdit(mem, offset, hex)
-            } else {
+            return if (mem.pid > 1 && mem.sAddress < 1L) {
                 parseMap(mem, lib)
                 memEdit(mem, offset, hex)
+            } else if (mem.pid > 1 && mem.sAddress > 1L) {
+                memEdit(mem, offset, hex)
+            } else {
+                false
             }
         }
 
         private fun parseMap(nmax: Memory, lib_name: String) {
-            File("/proc/${nmax.pid}/maps").useLines { liness ->
-                liness.forEach {
-                    if (it.contains(lib_name) && nmax.sAddress == 0L) {
-                        val lines = it.replace("\\s+".toRegex(), " ") //Removing WhiteSpace
-                        val regex = "\\p{XDigit}+".toRegex()
-                        val result: String = regex.find(lines)?.value!!
-                        nmax.sAddress = result.toLong(16)
+            val fil = File("/proc/${nmax.pid}/maps")
+            if (fil.exists()) {
+                fil.useLines { liness ->
+                    liness.forEach {
+                        if (it.contains(lib_name) && nmax.sAddress == 0L) {
+                            val lines = it.replace("\\s+".toRegex(), " ") //Removing WhiteSpace
+                            val regex = "\\p{XDigit}+".toRegex()
+                            val result: String = regex.find(lines)?.value!!
+                            nmax.sAddress = result.toLong(16)
+                        }
                     }
                 }
+            } else {
+                throw FileNotFoundException("FAILED OPEN DIRECTORY : ${fil.path}")
             }
         }
 
