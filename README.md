@@ -1,12 +1,12 @@
 # KMrite
 writing into android application lib.so with offset &amp; hex bytes <br />
-now its only supports Non Root Only [ With An Virtual Space ].
+support root and non root devices
 
-# Changelogs 2.0 :
-- Upgrading Kotlin version
-- Removing unused dependencies
-- Optimizing read maps & Patcher
+# Changelogs 3.0 :
+- updating UI
+- support root & non root
 
 # Usage
 The main code is in Tools.kt <br />
 Example using the code is in MainActivity.kt
+RootServices is in RootServices.kt and MainActivity.kt
