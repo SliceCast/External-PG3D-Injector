@@ -6,6 +6,18 @@ writing into android application lib.so with offset &amp; hex bytes <br />
 - fix hex input only number
 - update libsu version 3.1.2
 
+# Usages 
+- Git Clone This Project
+- Build with Android Studio
+- Install the app into your android devices
+- If you have root makesure you grant the RootAccess
+- If you're non root user then makesure you're using virtual app
+- open the target app
+- open the KMrite
+- fill all needed in the KMrite
+- click Patch
+- done
+
 # Information
 - The main code is in [Tools.kt](https://github.com/MrPictYT-art/KMrite/blob/master/app/src/main/java/com/kmrite/Tools.kt)
 - Example using the code is in [MainActivity.kt](https://github.com/MrPictYT-art/KMrite/blob/master/app/src/main/java/com/kmrite/MainActivity.kt)
