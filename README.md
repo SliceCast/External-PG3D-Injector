@@ -19,9 +19,9 @@ writing into android application lib.so with offset &amp; hex bytes <br />
 - done
 
 # Information
-- The main code is in [Tools.kt](https://github.com/MrPictYT-art/KMrite/blob/master/app/src/main/java/com/kmrite/Tools.kt)
-- Example using the code is in [MainActivity.kt](https://github.com/MrPictYT-art/KMrite/blob/master/app/src/main/java/com/kmrite/MainActivity.kt)
-- RootServices is in [RootServices.kt](https://github.com/MrPictYT-art/KMrite/blob/master/app/src/main/java/com/kmrite/RootServices.kt) and [MainActivity.kt](https://github.com/MrPictYT-art/KMrite/blob/master/app/src/main/java/com/kmrite/MainActivity.kt)
+- The main code is in [Tools.kt](https://github.com/BryanGIG/KMrite/blob/master/app/src/main/java/com/kmrite/Tools.kt)
+- Example using the code is in [MainActivity.kt](https://github.com/BryanGIG/KMrite/blob/master/app/src/main/java/com/kmrite/MainActivity.kt)
+- RootServices is in [RootServices.kt](https://github.com/BryanGIG/KMrite/blob/master/app/src/main/java/com/kmrite/RootServices.kt) and [MainActivity.kt](https://github.com/BryanGIG/KMrite/blob/master/app/src/main/java/com/kmrite/MainActivity.kt)
 
 # Credits
 - jbro129 - [LibInjector](https://github.com/jbro129/LibInjector)
