@@ -26,6 +26,11 @@ NOTE: Yes, this project has root inside it. You will neeed root for your device 
 Everything is implemented, root, some examples of the mods in MainActivity.
 Took the inspiration of Jbro129 PG3D Launcher.
 
+# Code
+Main Codes and mods in [MainActivity.kt](https://github.com/SliceCast/External-PG3D-Injector/blob/master/app/src/main/java/com/kmrite/MainActivity.kt)
+Values XML for Injectors background color, etc [Values](https://github.com/SliceCast/External-PG3D-Injector/tree/master/app/src/main/res/values)
+Injectors Layouts and Background Customization [activity_main.xml](https://github.com/SliceCast/External-PG3D-Injector/blob/master/app/src/main/res/layout/activity_main.xml)
+
 
 # Credits
 - BryanGIG - [KMrite-Injector](https://github.com/BryanGIG/KMrite)
