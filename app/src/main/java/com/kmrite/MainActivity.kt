@@ -1,4 +1,4 @@
-package com.kmrite
+package com.slicecast
 
 import android.content.ComponentName
 import android.content.Intent
@@ -7,12 +7,13 @@ import android.os.*
 import android.util.Log
 import android.widget.EditText
 import android.widget.ScrollView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.kmrite.databinding.ActivityMainBinding
+import com.slicecast.databinding.ActivityMainBinding
 import com.topjohnwu.superuser.CallbackList
 import com.topjohnwu.superuser.Shell
+import com.topjohnwu.superuser.ShellUtils
 import com.topjohnwu.superuser.ipc.RootService
+import java.io.File
 
 class MainActivity : AppCompatActivity(), Handler.Callback {
     lateinit var bind: ActivityMainBinding
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(), Handler.Callback {
     private var conn: MSGConnection? = null
 
     companion object {
-        const val TAG = "KMrite"
+        const val TAG = "PG3D Injector"
     }
 
     private var EditText.value
@@ -33,46 +34,32 @@ class MainActivity : AppCompatActivity(), Handler.Callback {
             this.setText(value)
         }
 
-    private fun getRequired(): Boolean {
-        return !(bind.pkg.text.isNullOrBlank() && bind.libname.text.isNullOrBlank() && bind.offset.text.isNullOrBlank() && bind.hex.text.isNullOrBlank())
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
-        Shell.rootAccess()
-        setContentView(bind.root)
+        if (Shell.rootAccess()) {
+            if (remoteMessenger == null) {
+                bind.console.append("startRootServices\n")
+                bind.console.append("Result : ")
+                serviceTestQueued = true
+                val intent = Intent(this, RootServices::class.java)
+                conn = MSGConnection()
+                RootService.bind(intent, conn!!)
+            }
+        }
+        setContentView (bind.root)
 
         bind.startPatcher.setOnClickListener {
-            if (getRequired()) {
-                if (Shell.rootAccess()) {
-                    if (remoteMessenger == null) {
-                        bind.console.append("startRootServices\n")
-                        bind.console.append("Result : ")
-                        serviceTestQueued = true
-                        val intent = Intent(this, RootServices::class.java)
-                        conn = MSGConnection()
-                        RootService.bind(intent, conn!!)
-                    }
-                    if (remoteMessenger != null) {
-                        bind.console.append("RootServiceRunning")
-                        bind.console.append("Result : ")
-                        testService()
-                    }
-                } else {
+            if (Shell.rootAccess()) {
+                if (remoteMessenger != null) {
+                    bind.console.append("RootServiceRunning")
                     bind.console.append("Result : ")
-                    bind.console.append(
-                        Tools.setCode(
-                            bind.pkg.value,
-                            bind.libname.value,
-                            Integer.decode(bind.offset.value),
-                            bind.hex.value
-                        ).toString()
-                    )
+                    testService("com.pixel.gun3d", "libil2cpp.so", 0x1515CDC, "01 00 A0 E3 1E FF 2F E1") //NinjaJump EXAMPLE
                 }
             } else {
-                Toast.makeText(this, "fill all needed info", Toast.LENGTH_SHORT).show()
-            }
+                bind.console.append("Result : ")
+                bind.console.append(Tools.setCode("com.pixel.gun3d", "libil2cpp.so", 0x1515CDC, "01 00 A0 E3 1E FF 2F E1").toString()) //NinjaJumo EXAMPLE
         }
     }
 
@@ -82,12 +69,12 @@ class MainActivity : AppCompatActivity(), Handler.Callback {
         return false
     }
 
-    private fun testService() {
+    private fun testService(pkg: String, libname: String, Offset: Int, hex: String) {
         val message: Message = Message.obtain(null, RootServices.MSG_GETINFO)
-        message.data.putString("pkg", bind.pkg.value)
-        message.data.putString("fileSo", bind.libname.value)
-        message.data.putInt("offset", Integer.decode(bind.offset.value))
-        message.data.putString("hexNumber", bind.hex.value)
+        message.data.putString("pkg", pkg)
+        message.data.putString("fileSo", libname)
+        message.data.putInt("offset", Offset)
+        message.data.putString("hexNumber", hex)
         message.replyTo = myMessenger
         try {
             remoteMessenger?.send(message)
@@ -102,7 +89,6 @@ class MainActivity : AppCompatActivity(), Handler.Callback {
             remoteMessenger = Messenger(service)
             if (serviceTestQueued) {
                 serviceTestQueued = false
-                testService()
             }
         }
 
