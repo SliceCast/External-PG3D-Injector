@@ -27,7 +27,7 @@ Everything is implemented, root, some examples of the mods in MainActivity.
 Took the inspiration of Jbro129 PG3D Launcher.
 
 # Preview
-![](https://imgur.com/a/kWHaTZv)
+![](http://imgur.com/a/kWHaTZv)
 
 # Code
 -Main Codes and mods in [MainActivity.kt](https://github.com/SliceCast/External-PG3D-Injector/blob/master/app/src/main/java/com/kmrite/MainActivity.kt)
