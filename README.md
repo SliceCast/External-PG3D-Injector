@@ -27,6 +27,7 @@ Everything is implemented, root, some examples of the mods in MainActivity.
 Took the inspiration of Jbro129 PG3D Launcher.
 
 # Preview
+
 ![](http://imgur.com/a/kWHaTZv)
 
 # Code
