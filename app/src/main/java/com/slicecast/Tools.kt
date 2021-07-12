@@ -1,4 +1,4 @@
-package com.kmrite
+package com.slicecast
 
 import android.util.Log
 import java.io.*
