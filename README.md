@@ -9,7 +9,7 @@
 - If you have root make sure you grant the RootAccess.
 - If you're non root user then make sure you're using any virtual app with root that works.
 - open the debug/injector
-- Open the original game (Example: Open Pixel Gun 3D so it the Debug can target the PID).
+- Open the original game (Example: Open Pixel Gun 3D so the Debug can target the PID).
 - click Inject
 - logs should say true, means working, if false then either root isn't granted or you broke something.
 - done
